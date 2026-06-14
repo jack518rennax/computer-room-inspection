@@ -1,6 +1,7 @@
 package com.patrol.task.controller;
 
 import com.patrol.common.R;
+import com.patrol.framework.annotation.OperLog;
 import com.patrol.task.entity.PatrolTask;
 import com.patrol.task.service.PatrolTaskService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class PatrolTaskController {
         return task != null ? R.ok(task) : R.error(404, "任务不存在");
     }
 
+    @OperLog(value = "新增巡检任务", type = OperLog.OperType.CREATE)
     @PostMapping
     public R<Void> create(@RequestBody PatrolTask task) {
         task.setCreateTime(LocalDateTime.now());
@@ -40,6 +42,7 @@ public class PatrolTaskController {
         return saved ? R.ok() : R.error("新增任务失败");
     }
 
+    @OperLog(value = "修改巡检任务", type = OperLog.OperType.UPDATE)
     @PutMapping
     public R<Void> update(@RequestBody PatrolTask task) {
         task.setUpdateTime(LocalDateTime.now());
@@ -47,6 +50,7 @@ public class PatrolTaskController {
         return updated ? R.ok() : R.error("修改任务失败");
     }
 
+    @OperLog(value = "删除巡检任务", type = OperLog.OperType.DELETE)
     @DeleteMapping("/{id}")
     public R<Void> delete(@PathVariable Long id) {
         boolean removed = patrolTaskService.removeById(id);
@@ -54,6 +58,7 @@ public class PatrolTaskController {
     }
 
     /** 接单 */
+    @OperLog(value = "接单巡检任务", type = OperLog.OperType.UPDATE)
     @PutMapping("/{id}/accept")
     public R<Void> accept(@PathVariable Long id, @RequestParam Long inspectorId) {
         PatrolTask task = patrolTaskService.getById(id);
@@ -66,6 +71,7 @@ public class PatrolTaskController {
     }
 
     /** 开始巡检 */
+    @OperLog(value = "开始巡检", type = OperLog.OperType.UPDATE)
     @PutMapping("/{id}/start")
     public R<Void> start(@PathVariable Long id) {
         PatrolTask task = patrolTaskService.getById(id);
@@ -78,6 +84,7 @@ public class PatrolTaskController {
     }
 
     /** 完成巡检 */
+    @OperLog(value = "完成巡检", type = OperLog.OperType.UPDATE)
     @PutMapping("/{id}/complete")
     public R<Void> complete(@PathVariable Long id) {
         PatrolTask task = patrolTaskService.getById(id);
