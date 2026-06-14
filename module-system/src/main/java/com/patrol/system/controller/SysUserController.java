@@ -1,6 +1,7 @@
 package com.patrol.system.controller;
 
 import com.patrol.common.R;
+import com.patrol.framework.annotation.OperLog;
 import com.patrol.system.entity.SysUser;
 import com.patrol.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class SysUserController {
         return user != null ? R.ok(user) : R.error(404, "用户不存在");
     }
 
+    @OperLog(value = "新增用户", type = OperLog.OperType.CREATE)
     @PostMapping
     public R<Void> create(@RequestBody SysUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -42,6 +44,7 @@ public class SysUserController {
         return saved ? R.ok() : R.error("新增用户失败");
     }
 
+    @OperLog(value = "修改用户", type = OperLog.OperType.UPDATE)
     @PutMapping
     public R<Void> update(@RequestBody SysUser user) {
         user.setPassword(null);
@@ -50,6 +53,7 @@ public class SysUserController {
         return updated ? R.ok() : R.error("修改用户失败");
     }
 
+    @OperLog(value = "删除用户", type = OperLog.OperType.DELETE)
     @DeleteMapping("/{id}")
     public R<Void> delete(@PathVariable Long id) {
         boolean removed = sysUserService.removeById(id);
