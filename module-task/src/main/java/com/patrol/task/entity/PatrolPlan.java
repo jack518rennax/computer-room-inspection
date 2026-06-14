@@ -1,4 +1,4 @@
-package com.patrol.system.entity;
+package com.patrol.task.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -7,47 +7,42 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * 系统菜单/权限（目录-菜单-按钮三级）
+ * 巡检计划
  *
  * @author patrol-team
  */
 @Data
-@TableName("sys_menu")
-public class SysMenu implements Serializable {
+@TableName("patrol_plan")
+public class PatrolPlan implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 父菜单ID（0=顶级） */
-    private Long parentId;
+    /** 计划名称 */
+    private String planName;
 
-    /** 菜单名称 */
-    private String name;
+    /** 计划描述 */
+    private String description;
 
-    /** 前端路由路径 */
-    private String path;
+    /** Cron 执行周期 */
+    private String cronExpr;
 
-    /** 前端组件路径 */
-    private String component;
+    /** 计划开始日期 */
+    private LocalDate startDate;
 
-    /** 按钮权限标识（如 system:user:create） */
-    private String perms;
+    /** 计划结束日期 */
+    private LocalDate endDate;
 
-    /** 类型：0=目录，1=菜单，2=按钮 */
-    private Integer type;
+    /** 负责部门ID */
+    private Long deptId;
 
-    /** 图标 */
-    private String icon;
-
-    /** 排序 */
-    private Integer sort;
-
-    /** 状态：0=禁用，1=启用 */
+    /** 状态：0=停用，1=启用 */
     private Integer status;
 
     /** 创建人 */

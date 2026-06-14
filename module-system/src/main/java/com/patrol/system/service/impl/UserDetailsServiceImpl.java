@@ -13,6 +13,7 @@ import com.patrol.system.mapper.SysUserMapper;
 import com.patrol.system.mapper.SysUserRoleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,8 +27,6 @@ import java.util.stream.Collectors;
 
 /**
  * Spring Security UserDetailsService 实现
- * <p>
- * 基于系统用户表加载用户信息、角色和权限。
  *
  * @author patrol-team
  */
@@ -43,44 +42,31 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 1. 查询用户
         SysUser user = sysUserMapper.selectOne(
                 new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在: " + username);
         }
 
-        // 2. 查询用户角色
         List<SysUserRole> userRoles = sysUserRoleMapper.selectList(
                 new LambdaQueryWrapper<SysUserRole>().eq(SysUserRole::getUserId, user.getId()));
-        Set<Long> roleIds = userRoles.stream()
-                .map(SysUserRole::getRoleId)
-                .collect(Collectors.toSet());
+        Set<Long> roleIds = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toSet());
 
-        List<SysRole> roles = roleIds.isEmpty()
-                ? Collections.emptyList()
-                : sysRoleMapper.selectBatchIds(roleIds)
-                        .stream()
+        List<SysRole> roles = roleIds.isEmpty() ? Collections.emptyList()
+                : sysRoleMapper.selectBatchIds(roleIds).stream()
                         .filter(r -> r.getStatus() != null && r.getStatus() == 1)
                         .collect(Collectors.toList());
 
-        // 3. 查询角色关联的菜单权限
-        List<SysRoleMenu> roleMenus = roleIds.isEmpty()
-                ? Collections.emptyList()
+        List<SysRoleMenu> roleMenus = roleIds.isEmpty() ? Collections.emptyList()
                 : sysRoleMenuMapper.selectList(
                         new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getRoleId, roleIds));
-        Set<Long> menuIds = roleMenus.stream()
-                .map(SysRoleMenu::getMenuId)
-                .collect(Collectors.toSet());
+        Set<Long> menuIds = roleMenus.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toSet());
 
-        List<SysMenu> menus = menuIds.isEmpty()
-                ? Collections.emptyList()
-                : sysMenuMapper.selectBatchIds(menuIds)
-                        .stream()
+        List<SysMenu> menus = menuIds.isEmpty() ? Collections.emptyList()
+                : sysMenuMapper.selectBatchIds(menuIds).stream()
                         .filter(m -> m.getStatus() != null && m.getStatus() == 1)
                         .collect(Collectors.toList());
 
-        // 4. 提取权限标识作为 GrantedAuthority
         List<SimpleGrantedAuthority> authorities = menus.stream()
                 .map(SysMenu::getPerms)
                 .filter(StringUtils::hasText)
@@ -88,24 +74,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        // 同时将角色编码作为 ROLE_ 前缀的权限
         roles.stream()
-                .map(SysRole::getCode)
+                .map(SysRole::getRoleCode)
                 .filter(StringUtils::hasText)
                 .map(code -> "ROLE_" + code)
                 .distinct()
                 .forEach(code -> authorities.add(new SimpleGrantedAuthority(code)));
 
-        // 5. 构建 UserDetails
         boolean enabled = user.getStatus() != null && user.getStatus() == 1;
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                enabled,          // enabled
-                true,             // accountNonExpired
-                true,             // credentialsNonExpired
-                true,             // accountNonLocked
-                authorities
-        );
+        return new User(user.getUsername(), user.getPassword(),
+                enabled, true, true, true, authorities);
     }
 }

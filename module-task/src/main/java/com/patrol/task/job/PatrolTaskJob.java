@@ -31,23 +31,24 @@ public class PatrolTaskJob extends QuartzJobBean {
                 context.getFireTime());
 
         try {
-            // 扫描状态为"运行中"的巡检任务
+            // 扫描状态为"巡检中"的任务
             List<PatrolTask> runningTasks = patrolTaskMapper.selectList(
                     new LambdaQueryWrapper<PatrolTask>()
-                            .eq(PatrolTask::getStatus, 1));
+                            .eq(PatrolTask::getStatus, 2));
 
-            log.info("扫描到 {} 个运行中的巡检任务", runningTasks.size());
+            log.info("扫描到 {} 个巡检中的任务", runningTasks.size());
 
             for (PatrolTask task : runningTasks) {
-                log.info("  └─ 任务: id={}, name={}, locationId={}, cron={}",
+                log.info("  └─ 任务: id={}, name={}, pointId={}, planId={}, taskDate={}",
                         task.getId(),
-                        task.getName(),
-                        task.getLocationId(),
-                        task.getCronExpression());
+                        task.getTaskName(),
+                        task.getPointId(),
+                        task.getPlanId(),
+                        task.getTaskDate());
             }
 
             if (runningTasks.isEmpty()) {
-                log.info("  当前无待执行的巡检任务");
+                log.info("  当前无巡检中的任务");
             }
 
         } catch (Exception e) {
