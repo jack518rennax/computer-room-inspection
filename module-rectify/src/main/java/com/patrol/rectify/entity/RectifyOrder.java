@@ -1,4 +1,4 @@
-package com.patrol.system.entity;
+package com.patrol.rectify.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,44 +10,38 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 系统菜单/权限（目录-菜单-按钮三级）
+ * 整改工单
  *
  * @author patrol-team
  */
 @Data
-@TableName("sys_menu")
-public class SysMenu implements Serializable {
+@TableName("rectify_order")
+public class RectifyOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 父菜单ID（0=顶级） */
-    private Long parentId;
+    /** 关联隐患记录ID */
+    private Long dangerId;
 
-    /** 菜单名称 */
-    private String name;
+    /** 整改人ID（关联 sys_user） */
+    private Long rectifierId;
 
-    /** 前端路由路径 */
-    private String path;
+    /** 整改期限 */
+    private LocalDateTime deadline;
 
-    /** 前端组件路径 */
-    private String component;
+    /** 实际完成时间 */
+    private LocalDateTime actualFinishTime;
 
-    /** 按钮权限标识（如 system:user:create） */
-    private String perms;
+    /** 整改措施 */
+    private String rectifyMeasure;
 
-    /** 类型：0=目录，1=菜单，2=按钮 */
-    private Integer type;
+    /** 整改照片URL列表（JSON数组） */
+    private String rectifyPhotos;
 
-    /** 图标 */
-    private String icon;
-
-    /** 排序 */
-    private Integer sort;
-
-    /** 状态：0=禁用，1=启用 */
+    /** 状态：0=待整改，1=整改中，2=待验收，3=验收通过，4=验收驳回 */
     private Integer status;
 
     /** 创建人 */

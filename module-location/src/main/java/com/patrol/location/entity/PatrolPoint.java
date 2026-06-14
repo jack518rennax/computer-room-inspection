@@ -1,4 +1,4 @@
-package com.patrol.system.entity;
+package com.patrol.location.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,42 +10,39 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 系统菜单/权限（目录-菜单-按钮三级）
+ * 巡检点位（升级自 PatrolLocation）
  *
  * @author patrol-team
  */
 @Data
-@TableName("sys_menu")
-public class SysMenu implements Serializable {
+@TableName("patrol_point")
+public class PatrolPoint implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 父菜单ID（0=顶级） */
-    private Long parentId;
+    /** 所属区域 */
+    private String areaName;
 
-    /** 菜单名称 */
-    private String name;
+    /** 设备名称 */
+    private String deviceName;
 
-    /** 前端路由路径 */
-    private String path;
+    /** 设备类型（如空调/UPS/配电柜/服务器） */
+    private String deviceType;
 
-    /** 前端组件路径 */
-    private String component;
+    /** 点位编码（唯一） */
+    private String pointCode;
 
-    /** 按钮权限标识（如 system:user:create） */
-    private String perms;
+    /** 详细位置描述 */
+    private String locationDetail;
 
-    /** 类型：0=目录，1=菜单，2=按钮 */
-    private Integer type;
+    /** 二维码内容（URL/JSON） */
+    private String qrcodeContent;
 
-    /** 图标 */
-    private String icon;
-
-    /** 排序 */
-    private Integer sort;
+    /** 二维码图片URL */
+    private String qrcodeImageUrl;
 
     /** 状态：0=禁用，1=启用 */
     private Integer status;
