@@ -5,7 +5,7 @@
 > **数据库**：MySQL 8.0.33 | **缓存**：Redis | **存储**：MinIO  
 > **认证**：Spring Security + JWT (jjwt 0.9.1)  
 > **文档**：Knife4j 4.1.0 (Swagger 3)  
-> **Git 分支**：main | **最后更新**：2026-06-14
+> **Git 分支**：feature/complete-backend-scaffold-new | **最后更新**：2026-06-14
 
 ---
 
@@ -18,7 +18,12 @@
 | 3 | UserDetailsService | ✅ 完成 | `UserDetailsServiceImpl.java` + 5 张用户权限表实体 |
 | 4 | 系统登录能力 | ✅ 完成 | `AuthController` + `LoginDTO` + `LoginVO` |
 | 5 | 五个业务模块 CRUD | ✅ 完成 | 5 模块 × 5 层（entity/mapper/service/impl/controller） |
-| 6 | SecurityConfig 增强 | ✅ 完成 | 注册 JWT Filter + 暴露 AuthenticationManager |
+| 6 | Quartz 定时任务 | ✅ 完成 | `PatrolTaskJob` + `QuartzConfig` (cron 可配置) |
+| 7 | EasyExcel 导入导出 | ✅ 完成 | 2 个 Excel DTO + 4 个导入导出端点 |
+| 8 | 数据库初始化脚本 | ✅ 完成 | `sql/init.sql` (9 张表 + 种子数据) |
+| 9 | MinIO 工具类 | ✅ 完成 | `MinioUtil` (上传/下载/删除/URL) + `FileController` |
+| 10 | Vue3 管理后台 | ✅ 完成 | `patrol-admin/` (27 文件: Vite + Element Plus + Pinia) |
+| 11 | uni-app 移动端 | ✅ 完成 | `patrol-mobile/` (15 文件: 登录/任务/扫码/整改) |
 | — | **Maven 编译** | ✅ 通过 | 全模块零错误编译 |
 
 ---
