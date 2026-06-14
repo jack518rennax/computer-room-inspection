@@ -1,0 +1,60 @@
+{
+  "pages": [
+    {
+      "path": "pages/login/index",
+      "style": { "navigationBarTitleText": "登录", "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/index/index",
+      "style": { "navigationBarTitleText": "首页" }
+    },
+    {
+      "path": "pages/task/list",
+      "style": { "navigationBarTitleText": "巡检任务" }
+    },
+    {
+      "path": "pages/task/detail",
+      "style": { "navigationBarTitleText": "任务详情" }
+    },
+    {
+      "path": "pages/scan/index",
+      "style": { "navigationBarTitleText": "扫码巡检" }
+    },
+    {
+      "path": "pages/rectify/index",
+      "style": { "navigationBarTitleText": "提交整改" }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "机房巡检",
+    "navigationBarBackgroundColor": "#1677FF",
+    "backgroundColor": "#F5F5F5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1677FF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tab-home.png",
+        "selectedIconPath": "static/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/task/list",
+        "text": "任务",
+        "iconPath": "static/tab-task.png",
+        "selectedIconPath": "static/tab-task-active.png"
+      },
+      {
+        "pagePath": "pages/scan/index",
+        "text": "扫码",
+        "iconPath": "static/tab-scan.png",
+        "selectedIconPath": "static/tab-scan-active.png"
+      }
+    ]
+  }
+}
