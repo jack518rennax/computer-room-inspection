@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.patrol</groupId>
+        <artifactId>patrol-backend</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-ai</artifactId>
+    <name>module-ai</name>
+    <description>AI 模块 - 智能分析、异常检测</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.patrol</groupId>
+            <artifactId>framework</artifactId>
+        </dependency>
+    </dependencies>
+</project>
