@@ -10,44 +10,29 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 系统角色
+ * 预警规则
  *
  * @author patrol-team
  */
 @Data
-@TableName("sys_role")
-public class SysRole implements Serializable {
+@TableName("warn_rule")
+public class WarnRule implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 角色名称 */
-    private String roleName;
-
-    /** 角色编码（ADMIN / INSPECTOR / AUDITOR） */
-    private String roleCode;
-
-    /** 排序 */
-    private Integer sort;
-
-    /** 状态：0=禁用，1=启用 */
-    private Integer status;
-
-    /** 创建人 */
+    private String ruleName;
+    private String deviceType;
+    private String ruleExpression;
+    private Integer alarmLevel;
+    private Integer isEnabled;
     private String createBy;
-
-    /** 创建时间 */
     private LocalDateTime createTime;
-
-    /** 更新人 */
     private String updateBy;
-
-    /** 更新时间 */
     private LocalDateTime updateTime;
 
-    /** 逻辑删除 */
     @TableLogic
     private Integer deleted;
 }

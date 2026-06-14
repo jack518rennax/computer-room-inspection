@@ -19,11 +19,5 @@
             <groupId>com.patrol</groupId>
             <artifactId>framework</artifactId>
         </dependency>
-
-        <!-- EasyExcel -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-        </dependency>
     </dependencies>
 </project>

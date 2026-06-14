@@ -6,6 +6,7 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * 巡检任务 Excel DTO
@@ -22,24 +23,28 @@ public class PatrolTaskExcelDTO implements Serializable {
 
     @ExcelProperty("任务名称")
     @ColumnWidth(20)
-    private String name;
+    private String taskName;
 
-    @ExcelProperty("任务描述")
-    @ColumnWidth(30)
-    private String description;
-
-    @ExcelProperty("关联点位ID")
+    @ExcelProperty("巡检日期")
     @ColumnWidth(15)
-    private Long locationId;
+    private LocalDate taskDate;
 
-    @ExcelProperty("Cron表达式")
-    @ColumnWidth(20)
-    private String cronExpression;
+    @ExcelProperty("计划ID")
+    @ColumnWidth(10)
+    private Long planId;
+
+    @ExcelProperty("点位ID")
+    @ColumnWidth(10)
+    private Long pointId;
 
     @ExcelProperty("状态")
-    @ColumnWidth(10)
+    @ColumnWidth(12)
     private String statusName;
 
     @ExcelIgnore
     private Integer status;
+
+    @ExcelProperty("巡检员ID")
+    @ColumnWidth(12)
+    private Long inspectorId;
 }

@@ -21,20 +21,17 @@ public class SysRoleController {
 
     private final SysRoleService sysRoleService;
 
-    /** 列表 */
     @GetMapping("/list")
     public R<List<SysRole>> list() {
         return R.ok(sysRoleService.list());
     }
 
-    /** 详情 */
     @GetMapping("/detail/{id}")
     public R<SysRole> detail(@PathVariable Long id) {
         SysRole role = sysRoleService.getById(id);
         return role != null ? R.ok(role) : R.error(404, "角色不存在");
     }
 
-    /** 新增 */
     @PostMapping
     public R<Void> create(@RequestBody SysRole role) {
         role.setCreateTime(LocalDateTime.now());
@@ -42,7 +39,6 @@ public class SysRoleController {
         return saved ? R.ok() : R.error("新增角色失败");
     }
 
-    /** 修改 */
     @PutMapping
     public R<Void> update(@RequestBody SysRole role) {
         role.setUpdateTime(LocalDateTime.now());
@@ -50,7 +46,6 @@ public class SysRoleController {
         return updated ? R.ok() : R.error("修改角色失败");
     }
 
-    /** 删除（逻辑删除） */
     @DeleteMapping("/{id}")
     public R<Void> delete(@PathVariable Long id) {
         boolean removed = sysRoleService.removeById(id);

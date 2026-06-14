@@ -10,45 +10,30 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 系统菜单/权限（目录-菜单-按钮三级）
+ * 字典类型
  *
  * @author patrol-team
  */
 @Data
-@TableName("sys_menu")
-public class SysMenu implements Serializable {
+@TableName("sys_dict_type")
+public class SysDictType implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 父菜单ID（0=顶级） */
-    private Long parentId;
+    /** 字典名称 */
+    private String dictName;
 
-    /** 菜单名称 */
-    private String name;
-
-    /** 前端路由路径 */
-    private String path;
-
-    /** 前端组件路径 */
-    private String component;
-
-    /** 按钮权限标识（如 system:user:create） */
-    private String perms;
-
-    /** 类型：0=目录，1=菜单，2=按钮 */
-    private Integer type;
-
-    /** 图标 */
-    private String icon;
-
-    /** 排序 */
-    private Integer sort;
+    /** 字典编码 */
+    private String dictCode;
 
     /** 状态：0=禁用，1=启用 */
     private Integer status;
+
+    /** 备注 */
+    private String remark;
 
     /** 创建人 */
     private String createBy;
